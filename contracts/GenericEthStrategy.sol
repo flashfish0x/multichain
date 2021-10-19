@@ -163,8 +163,9 @@ contract Strategy is BaseStrategy {
         uint256 wantBal = _wantBalance();
         bool harvest;
         if(wantBal > debtThreshold){
-            harvest = vault.debtOutstanding() >= debtThreshold;
-            harvest = pendingProfit >= debtThreshold;
+            if(vault.debtOutstanding() >= debtThreshold || pendingProfit >= debtThreshold){
+                harvest = true;
+            }
         }
 
         return harvest;
